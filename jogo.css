@@ -1,0 +1,65 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(51, 158, 51);
+}
+
+#app {
+    width: 80%;
+    max-width: 600px;
+    text-align: center;
+}
+
+.personagem {
+    background-color: green;
+    border: 2px solid rgb(10, 102, 10);
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 8px;
+    width: 200px;
+}
+
+.acoes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+button {
+    padding: 8px;
+    gap: 8px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(187, 237, 38);
+    cursor: pointer;
+    transition: background-color 0.7s, transform 0.2s;
+}
+
+button:hover {
+    background-color: rgb(156, 201, 20);
+    transform: translateY(-3px);
+}
+
+button:active {
+    transform: translateY(0px);
+}
+
+.barra-vida {
+    height: 32px;
+    background-color: gold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: red;
+    border-radius: 5px;
+    margin-bottom: 16px;
+}
+
+.sprite {
+    height: 160px;
+    
+    background-color: #ddd;
+}
