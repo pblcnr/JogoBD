@@ -10,7 +10,9 @@ body, html {
 #app {
     width: 80%;
     max-width: 600px;
-    text-align: center;
+    text-align: center; 
+    display: flex;
+    padding: 36px;
 }
 
 .personagem {
