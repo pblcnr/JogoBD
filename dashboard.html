@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <title>Dashboard - Jogo Herói e Vilão</title>
     <link rel="stylesheet" href="dashboard.css">
 </head>
+
 <body>
     <div id="app" class="container">
         <h1>Dashboard</h1>
@@ -18,31 +20,84 @@
                 <div>Vida: {{ vilaoVida }}%</div>
             </div>
         </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
-    <script>
-        new Vue({
-            el: '#app',
-            data: {
-                heroiVida: '',
-                vilaoVida: ''
-            },
-            mounted() {
-                this.fetchCharacterData();
-            },
-            methods: {
-                async fetchCharacterData() {
-                    try {
-                        const response = await fetch('http://localhost:3000/characters'); // Substitua pela sua rota da API
-                        const data = await response.json();
-                        this.heroiVida = data.heroi.Vida;
-                        this.vilaoVida = data.vilao.Vida;
-                    } catch (error) {
-                        console.error('Erro ao buscar dados dos personagens:', error);
+            <div>
+                <h3>Histórico de Ações</h3>
+                <ul id="historico-list" class="historico-list">
+                <p> Última ação</p>
+                    <li v-for="(acao, index) in historico" :key="acao.id">
+                        {{ acao.acao }}
+                    </li>
+                </ul>
+            </div>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+        <script>
+            new Vue({
+                el: '#app',
+                data: {
+                    heroiVida: '',
+                    vilaoVida: '',
+                    historico: []
+                },
+                mounted() {
+                    this.fetchCharacterData();
+                    this.fetchHistorico();
+                },
+                methods: {
+                    async fetchCharacterData() {
+                        try {
+                            const response = await fetch('https://jogobd.onrender.com/characters'); // Substitua pela sua rota da API
+                            const data = await response.json();
+                            this.heroiVida = data.heroi.Vida;
+                            this.vilaoVida = data.vilao.Vida;
+                        } catch (error) {
+                            console.error('Erro ao buscar dados dos personagens:', error);
+                        }
+                    },
+                    async enviarHistoricoParaBancoDeDados(acao) {
+                        try {
+                            // Aqui, substitua 0 pelos valores reais de vida do herói e do vilão
+                            await fetch('https://jogobd.onrender.com/adicionarHistorico', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ acao })
+                            });
+                            console.log('Ação adicionada ao histórico com sucesso.');
+                        } catch (error) {
+                            console.error('Erro ao adicionar entrada ao histórico:', error);
+                        }
+                    },
+                    async adicionarAoHistorico(historico) {
+                        try {
+                            const response = await fetch('https://jogobd.onrender.com/teste', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(historico)
+                            });
+                            if (!response.ok) {
+                                throw new Error('Erro ao testar a rota de histórico.');
+                            }
+                            console.log('Sucesso ao testar a rota de histórico.');
+                        } catch (error) {
+                            console.error('Erro ao testar a rota de histórico:', error);
+                        }
+                    },
+                    async fetchHistorico() {
+                        try {
+                            const response = await fetch('https://jogobd.onrender.com/historico');
+                            const data = await response.json();
+                            this.historico = data.historico; // Atribui os dados do histórico ao array historico no Vue
+                        } catch (error) {
+                            console.error('Erro ao buscar histórico de ações:', error);
+                        }
                     }
+
                 }
-            }
-        });
-    </script>
+            });
+        </script>
 </body>
+
 </html>
