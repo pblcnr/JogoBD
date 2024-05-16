@@ -1,95 +1,63 @@
 const { createApp } = Vue;
-
-const Login = {
-    template: `
-        <div class="container">
-            <h2>Login</h2>
-            <form @submit.prevent="login">
-                <div>
-                    <label for="login-email">Email:</label>
-                    <input type="email" id="login-email" v-model="loginEmail" required>
-                </div>
-                <div>
-                    <label for="login-password">Senha:</label>
-                    <input type="password" id="login-password" v-model="loginPassword" required>
-                </div>
-                <button type="submit">Entrar</button>
-            </form>
-            <button @click="changeComponent('SignIn')">Ir para Sign In</button>
-        </div>
-    `,
-    data() {
-        return {
-            loginEmail: '',
-            loginPassword: ''
-        };
-    },
-    methods: {
-        login() {
-            console.log('Email', this.loginEmail);
-            console.log('Senha:', this.loginPassword);
-        },
-        changeComponent(component) {
-            this.$parent.currentComponent = component;
-        }
-    }
-};
-
-const SignIn = {
-    template: `
-        <div class="container">
-            <h2>Sign In</h2>
-            <form @submit.prevent="signIn">
-                <div>
-                    <label for="signin-email">Email:</label>
-                    <input type="email" id="signin-email" v-model="signInEmail" required>
-                </div>
-                <div>
-                    <label for="signin-password">Senha:</label>
-                    <input type="password" id="signin-password" v-model="signInPassword" required>
-                </div>
-                <div>
-                    <label for="first-name">Nome:</label>
-                    <input type="text" id="first-name" v-model="firstName" required>
-                </div>
-                <div>
-                    <label for="last-name">Sobrenome:</label>
-                    <input type="text" id="last-name" v-model="lastName" required>
-                </div>
-                <button type="submit">Sign In</button>
-            </form>
-            <button @click="changeComponent('Login')">Voltar para Login</button>
-        </div>
-    `,
-    data() {
-        return {
-            signInEmail: '',
-            signInPassword: '',
-            firstName: '',
-            lastName: ''
-        };
-    },
-    methods: {
-        signIn() {
-            console.log('Email: ', this.signInEmail);
-            console.log('Senha:', this.signInPassword);
-            console.log('Nome:', this.firstName);
-            console.log('Sobrenome:', this.lastName);
-        },
-        changeComponent(component) {
-            this.$parent.currentComponent = component;
-        }
-    }
-};
+const API_URL = 'http://localhost:3000';
 
 createApp({
     data() {
         return {
-            currentComponent: Login
-        };
+            heroi: { vida: 100 },
+            vilao: { vida: 100 }            
+        };        
     },
-    components: {
-        Login,
-        SignIn
+    methods: {
+        atacar(isHeroi) {
+            if (isHeroi) {
+                this.vilao.vida -= 10;
+                this.atualizarVidaNoBancoDeDados(this.heroi.vida, this.vilao.vida);
+                this.acaoVilao();
+            } else {
+                this.heroi.vida -= 20;
+                this.atualizarVidaNoBancoDeDados(this.vilao.vida, this.heroi.vida);
+            }
+        },
+        async atualizarVidaNoBancoDeDados(vidaHeroi, vidaVilao) {
+            try {
+                const response = await fetch(`${API_URL}/atualizarVida`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ vidaHeroi, vidaVilao })
+                });
+                if (!response.ok) {
+                    throw new Error('Erro ao atualizar a vida no banco de dados.');
+                }
+                console.log('Vida do herói e do vilão atualizada com sucesso.');
+            } catch (error) {
+                console.error('Erro ao atualizar a vida no banco de dados:', error);
+            }
+        },
+        defender(isHeroi) {
+            this.acaoVilao();
+        },
+        usarPocao(isHeroi) {
+            if (isHeroi) {
+                this.vilao.vida += 10;
+                this.atualizarVidaNoBancoDeDados(this.heroi.vida, this.vilao.vida);
+                this.acaoVilao();
+            } else {
+                this.heroi.vida += 10;
+                this.atualizarVidaNoBancoDeDados(this.vilao.vida, this.heroi.vida);
+            }
+            this.acaoVilao();
+        },
+        correr(isHeroi) {
+            this.acaoVilao();
+        },
+        acaoVilao() {
+            const acoes = ['atacar', 'defender', 'usarPocao', 'correr'];
+            const acaoAleatoria = acoes[Math.floor(Math.random() * acoes.length)];
+            this[acaoAleatoria](false);
+            console.log('O vilão usou: ' + acaoAleatoria)
+        }
     }
-}).mount('#app');
+}).mount("#app");

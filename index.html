@@ -1,19 +1,35 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Jogo Herói Vilão</title>
-    <link rel="stylesheet" href="styleLogin.css">
+    <title>Prova - Jogo Herói e Vilão</title>
+    <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
+
 <body>
     <div id="app">
-        <component :is="currentComponent"></component>
+        <div class="personagem">
+            <div class="barra-vida" :style="{width: heroi.vida + '%'}">{{ heroi.vida }}%</div>
+            <div class="sprite"><img src="/images/scott.png" alt="Scott Pilgrim" width="160" height="160"></div>
+            <h1>Scott Pilgrim</h1>
+            <div class="acoes">
+                <button @click="atacar(true)">Atacar</button>
+                <button @click="defender(true)">Defender</button>
+                <button @click="pocao(true)">Usar Poção</button>
+                <button @click="correr(true)">Correr</button>
+            </div>
+        </div>
+
+        <div class="personagem">
+            <div class="barra-vida" :style="{width: vilao.vida + '%'}">{{ vilao.vida }}%</div>
+            <div class="sprite"><img src="/images/gideon.webp" alt="Gideon" width="160" height="160"></div>
+            <h1>Gideon</h1>
+            <button onclick="window.open('dashboard.html','_blank')">Dashboard</button>
+        </div>        
     </div>
-
-    
 </body>
-</html>
 
-<script src="index.js"></script>
+</html>
+<script type="module" src="index.js"></script>
