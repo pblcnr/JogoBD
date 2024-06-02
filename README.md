@@ -3,6 +3,8 @@
 # 🎮 Descrição
 O Jogo Herói e Vilão é uma aplicação web que simula uma batalha entre um herói e um vilão. Os usuários podem interagir escolhendo ações para os personagens, como atacar, defender, usar poção e correr. A cada ação realizada, o estado dos personagens é atualizado e exibido na interface do usuário.
 
+Acesse o jogo: <a href="https://jogobd-heroivilao.netlify.app/"> clicando aqui! </a>
+
 # Características do Jogo 
 - Batalha entre um herói e um vilão.
 - Interface interativa que permite aos usuários escolherem ações para os personagens.
@@ -33,3 +35,17 @@ O Jogo Herói e Vilão é uma aplicação web que simula uma batalha entre um he
 - Histórico de Ações: Todas as ações realizadas durante a partida são registradas em um histórico e armazenadas no banco de dados.
 
 # Telas do Jogo
+- Página de Login:
+  <img src="/images/login.png"></img>
+
+- Tela de Jogo:
+  <img src="/images/jogo.png"></img>
+
+- Dashboardo conectado ao Banco de Dados:
+  <img src="/images/dashboard.png"></img>
+
+# Créditos
+Desenvolvido por **Paulo Henrique de Andrade**
+
+# Licença
+Este projeto é distribuído sob a Licença MIT. Consulte o arquivo [LICENSE] para obter mais detalhes.
