@@ -27,7 +27,7 @@ const Login = {
     methods: {
         async login() {
             try {
-                const response = await fetch('/api/login', {
+                const response = await fetch('https://jogobd.onrender.com/usuario', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

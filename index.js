@@ -137,7 +137,7 @@ createApp({
         },
         async adicionarHistorico(acao) {
             try {
-                //let acao = this.acao;
+                // let acao = this.acao;
                 const response = await fetch(`${API_URL}/adicionarHistorico`, {
                     method: 'POST',
                     headers: {
