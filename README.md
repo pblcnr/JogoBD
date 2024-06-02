@@ -1,6 +1,6 @@
 # JogoBD
 
-# 🎮 Descrição
+# Descrição
 O Jogo Herói e Vilão é uma aplicação web que simula uma batalha entre um herói e um vilão. Os usuários podem interagir escolhendo ações para os personagens, como atacar, defender, usar poção e correr. A cada ação realizada, o estado dos personagens é atualizado e exibido na interface do usuário.
 
 Acesse o jogo: <a href="https://jogobd-heroivilao.netlify.app/"> clicando aqui! </a>
